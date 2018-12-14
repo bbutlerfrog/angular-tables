@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { catchError, retry, map } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 
 import { DepartmentApi } from './shared/department-api.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeesService {
+export class DepartmentsService {
 
   constructor(private http: HttpClient) { }
 
-  DepartmentUrl = 'http://localhost:8335/employees';
+  DepartmentUrl = 'https://api.benfrog.net/departments';
   
   
 
@@ -25,8 +25,7 @@ export class EmployeesService {
     return this.http.get<DepartmentApi>(this.DepartmentUrl, {params: httpParams})
     .pipe(
       retry(3), // retry a failed request up to 3 times
-      catchError(this.handleError), // then handle the error
-      map(res => res["payload"])
+      catchError(this.handleError) // then handle the error
     );
   }
 

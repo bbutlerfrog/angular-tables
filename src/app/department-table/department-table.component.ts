@@ -4,7 +4,7 @@ import { MatSort, MatPaginator } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 
-import { EmployeesService } from '../employees.service';
+import { DepartmentsService } from '../departments.service';
 import { Department } from '../shared/department.model';
 
 
@@ -13,7 +13,7 @@ import { Department } from '../shared/department.model';
   selector: 'app-department-table',
   templateUrl: './department-table.component.html',
   styleUrls: ['./department-table.component.css'],
-  providers: [EmployeesService]
+  providers: [DepartmentsService]
 })
 
 
@@ -22,16 +22,11 @@ export class DepartmentTableComponent  implements OnInit{
   displayedColumns: string[] = ['dept_no', 'dept_name'];
   resultsLength= 0;
   isLoadingResults = true;
-  employeesService: EmployeesService | null;
+  departmentsService: DepartmentsService | null;
   data: Department[] = [];
- 
-
-  
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
-
 
   constructor(private http: HttpClient) { }
 
@@ -39,13 +34,13 @@ export class DepartmentTableComponent  implements OnInit{
     this.sort.direction = 'asc';
     this.sort.active = 'dept_no';
     this.sort.sortChange.subscribe();
-    this.employeesService = new EmployeesService(this.http);
+    this.departmentsService = new DepartmentsService(this.http);
      merge(this.sort.sortChange)
       .pipe(
           startWith({}),
           switchMap(() => {
             this.isLoadingResults = true;
-            return this.employeesService!.getDepartments(this.sort.direction, this.sort.active)
+            return this.departmentsService!.getDepartments(this.sort.direction, this.sort.active)
           }),
         map(data => {
           // Flip flag to show that loading has finished.
