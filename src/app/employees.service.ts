@@ -1,9 +1,9 @@
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { catchError, retry, map } from 'rxjs/operators';
+import { catchError, map, retry } from 'rxjs/operators';
+import { Employee } from './shared/employee.model';
 
-import { DepartmentApi } from './shared/department-api.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,21 +12,30 @@ export class EmployeesService {
 
   constructor(private http: HttpClient) { }
 
-  DepartmentUrl = 'http://localhost:8335/employees';
+  EmployeesUrl = 'http://localhost:8335/employees';
   
   
 
-  getDepartments(sortDirection: string, sortParameter: string ): Observable<DepartmentApi> {
+  getEmployees(sortDirection: string, sortParameter: string, filter: string, start: number, end: number ): Observable<Employee[]> {
     sortDirection = sortDirection.trim();
     sortParameter = sortParameter.trim();
+    filter = filter.trim();
+    
 
-    let httpParams = new HttpParams({ fromObject: { sortDirection: sortDirection, sortBy: sortParameter } });
+    //toString is necessary here becuase httpClient does not support anything but strings (documented bug)
+    let httpParams = new HttpParams({ fromObject: { sortDirection: sortDirection, sortParameter: sortParameter, filter: filter,
+      start: start.toString(), end: end.toString()  } });
 
-    return this.http.get<DepartmentApi>(this.DepartmentUrl, {params: httpParams})
+    return this.http.get(this.EmployeesUrl, {params: httpParams})
     .pipe(
       retry(3), // retry a failed request up to 3 times
       catchError(this.handleError), // then handle the error
-      map(res => res["payload"])
+      map(res => {
+        res['payload'] = res;
+        return res["payload"];
+        
+        
+      })
     );
   }
 
