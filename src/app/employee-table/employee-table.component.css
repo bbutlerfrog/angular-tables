@@ -2,11 +2,55 @@ table {
   width: 100%;
 }
 
+.employee-table-container {
+  position: relative;
+}
+
+.department-table-container {
+  position: relative;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+
 .mat-form-field {
   font-size: 14px;
   width: 100%;
 }
 
-td, th {
-  width: 25%;
+
+.employee-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-column-emp_no {
+  min-width: 50px;
+}
+
+.mat-column-first_name {
+  min-width: 100px;
+}
+
+.mat-column-last_name {
+  min-width: 100px;
+}
+
+.mat-column-hire_date {
+  min-width: 150px;
+}
+
+.mat-column-birth_date {
+  min-width: 150px;
 }

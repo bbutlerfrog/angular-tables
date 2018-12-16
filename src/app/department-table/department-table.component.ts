@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatPaginator } from '@angular/material';
-import { merge, Observable, of as observableOf } from 'rxjs';
+import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 
 import { DepartmentsService } from '../departments.service';
