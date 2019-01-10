@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatSort, MatPaginator } from '@angular/material';
 import { merge, fromEvent } from 'rxjs';
-import { map, startWith, switchMap, debounceTime, tap, distinctUntilChanged } from 'rxjs/operators';
+import { map, startWith, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { EmployeeService } from '../employee.service';
 import { Employee } from '../shared/employee.model';

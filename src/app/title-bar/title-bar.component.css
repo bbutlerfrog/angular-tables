@@ -6,3 +6,11 @@
     margin-left: 6px;
     margin-right: 6px;
 }
+
+.mat-toolbar.mat-primary {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}

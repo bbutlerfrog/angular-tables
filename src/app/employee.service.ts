@@ -20,8 +20,7 @@ export class EmployeeService {
         sortParameter = sortParameter.trim();
         filter = filter.trim();
 
-
-        //toString is necessary here becuase httpClient does not support anything but strings (documented bug)
+        //toString is necessary here because httpClient does not support anything but strings 
         let httpParams = new HttpParams({
           fromObject: {
               sortDirection: sortDirection, sortParameter: sortParameter, filter: filter,
