@@ -10,13 +10,13 @@ import {
   MatSortModule, MatTableModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule
 } from '@angular/material';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AppComponent }  from './app.component';
+import { AppComponent } from './app.component';
 import { DepartmentTableComponent } from './department-table/department-table.component';
 import { EmployeeTableComponent } from './employee-table/employee-table.component';
+import { HighlightModule } from 'ngx-highlightjs';
 import typescript from 'highlight.js/lib/languages/typescript';
 import javascript from 'highlight.js/lib/languages/javascript';
 import php from 'highlight.js/lib/languages/php';
-import { HighlightModule } from 'ngx-highlightjs';
 import { AppRoutingModule } from './app-routing.module';
 import { IntroComponent } from './intro/intro.component';
 import { SimpleComponent } from './simple/simple.component';
@@ -24,11 +24,13 @@ import { InterestingComponent } from './interesting/interesting.component';
 
 export function hljsLanguages() {
   return [
-    {name: 'typescript', func: typescript},
-    {name: 'php', func: php},
-    {name: 'javascript', func: javascript }
+    { name: 'typescript', func: typescript },
+    { name: 'php', func: php },
+    { name: 'javascript', func: javascript }
   ];
 }
+export const APP_ID = 'my-app';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ export function hljsLanguages() {
     InterestingComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({appId: 'angulartables'}),
     HttpClientModule,
     MatToolbarModule,
     FontAwesomeModule,
