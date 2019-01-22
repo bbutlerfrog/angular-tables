@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { Intro } from './intro/intro.component';
+import { IntroComponent } from './intro/intro.component';
 import { SimpleComponent } from './simple/simple.component';
 import { InterestingComponent } from './interesting/interesting.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/intro', pathMatch: 'full' },
-  { path: 'intro', component: Intro },
+  { path: 'intro', component: IntroComponent },
   { path: 'simple', component: SimpleComponent },
-  { path: 'interesting', component: InterestingComponent}
+  { path: 'interesting', component: InterestingComponent }, 
+  { path: '**', redirectTo: '/' }
 
 ];
 

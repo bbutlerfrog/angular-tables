@@ -18,7 +18,7 @@ import javascript from 'highlight.js/lib/languages/javascript';
 import php from 'highlight.js/lib/languages/php';
 import { HighlightModule } from 'ngx-highlightjs';
 import { AppRoutingModule } from './app-routing.module';
-import { Intro } from './intro/intro.component';
+import { IntroComponent } from './intro/intro.component';
 import { SimpleComponent } from './simple/simple.component';
 import { InterestingComponent } from './interesting/interesting.component';
 
@@ -35,7 +35,7 @@ export function hljsLanguages() {
     AppComponent,
     DepartmentTableComponent,
     EmployeeTableComponent,
-    Intro,
+    IntroComponent,
     SimpleComponent,
     InterestingComponent
   ],
