@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HighlightResult } from 'ngx-highlightjs';
 
 @Component({
   selector: 'app-simple',
@@ -8,7 +7,6 @@ import { HighlightResult } from 'ngx-highlightjs';
 })
 export class SimpleComponent  {
 
-  response: HighlightResult;
 
   code1 = `export interface Department {
   DepartmentName: string;
@@ -100,14 +98,5 @@ export class DepartmentsService {
           this.resultsLength = data.total_count;
           return data.items;
         })).subscribe(data =>this.data = data);`;
-
-  onHighlight(e) {
-    this.response = {
-      language: e.language,
-      r: e.r,
-      second_best: '{...}',
-      top: '{...}',
-      value: '{...}'
-    }
-  }
+ 
 }

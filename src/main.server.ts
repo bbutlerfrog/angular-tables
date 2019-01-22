@@ -6,7 +6,6 @@ import { createServer } from 'http';
 import { join } from 'path';
 
 import { enableProdMode } from '@angular/core';
-import { MODULE_MAP } from '@nguniversal/module-map-ngfactory-loader';
 import { NgSetupOptions } from '@nguniversal/express-engine';
 
 import { createApi } from './api';
@@ -18,14 +17,6 @@ export const BROWSER_DIST_PATH = join(__dirname, '..', 'browser');
 
 export const getNgRenderMiddlewareOptions: () => NgSetupOptions = () => ({
   bootstrap: exports.AppServerModuleNgFactory,
-  providers: [
-    // Import module map for lazy loading
-    {
-      provide: MODULE_MAP,
-      useFactory: () => exports.LAZY_MODULE_MAP,
-      deps: [],
-    }
-  ]
 });
 
 // Faster server renders w/ Prod mode (dev mode never needed)

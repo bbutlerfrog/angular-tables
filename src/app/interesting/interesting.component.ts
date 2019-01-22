@@ -1,5 +1,4 @@
 import { Component  } from '@angular/core';
-import { HighlightResult } from 'ngx-highlightjs';
 
 @Component({
   selector: 'app-interesting',
@@ -8,7 +7,6 @@ import { HighlightResult } from 'ngx-highlightjs';
 })
 export class InterestingComponent {
 
-  response: HighlightResult;
 
   employeesMaterialExampleFilter = `<mat-form-field>
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -69,15 +67,5 @@ export class InterestingComponent {
         }),
       ).subscribe(data => this.data = data);
   }`;
-
-  onHighlight(e) {
-    this.response = {
-      language: e.language,
-      r: e.r,
-      second_best: '{...}',
-      top: '{...}',
-      value: '{...}'
-    }
-  }
 
 }

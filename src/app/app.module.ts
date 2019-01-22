@@ -13,24 +13,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppComponent } from './app.component';
 import { DepartmentTableComponent } from './department-table/department-table.component';
 import { EmployeeTableComponent } from './employee-table/employee-table.component';
-import { HighlightModule } from 'ngx-highlightjs';
-import typescript from 'highlight.js/lib/languages/typescript';
-import javascript from 'highlight.js/lib/languages/javascript';
-import php from 'highlight.js/lib/languages/php';
 import { AppRoutingModule } from './app-routing.module';
 import { IntroComponent } from './intro/intro.component';
 import { SimpleComponent } from './simple/simple.component';
 import { InterestingComponent } from './interesting/interesting.component';
 
-export function hljsLanguages() {
-  return [
-    { name: 'typescript', func: typescript },
-    { name: 'php', func: php },
-    { name: 'javascript', func: javascript }
-  ];
-}
-export const APP_ID = 'my-app';
-
+export const APP_ID = 'angulartables';
 
 @NgModule({
   declarations: [
@@ -60,10 +48,8 @@ export const APP_ID = 'my-app';
     MatIconModule,
     MatListModule,
     AppRoutingModule,
-    HighlightModule.forRoot({ languages: hljsLanguages })
 
   ],
   providers: [],
-  bootstrap: [AppComponent]
 })
 export class AppModule { }
