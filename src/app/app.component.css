@@ -1,0 +1,47 @@
+.icons {
+  margin-left: auto;
+}
+
+.menu-spacer {
+  flex: 1 1 auto;
+}
+
+.responsiveIcons {
+  color: black;
+}
+
+.icons {
+  color: white;
+}
+
+.fab {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.mat-toolbar.mat-primary {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+.mat-sidenav-container {
+  margin-top : 70px;
+  background-color: white;
+}
+
+ .matTypography {
+  font-size: 1rem; 
+  background-color: white;
+  margin-left: 150px;
+  margin-right: 150px;
+ }
+
+ .matTypographySm {
+  font-size: 1rem; 
+  background-color: white;
+  margin-left: 15px;
+  margin-right: 15px; 
+}

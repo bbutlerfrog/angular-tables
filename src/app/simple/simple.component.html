@@ -1,0 +1,116 @@
+<div fxLayout="column" ngClass.gt-sm="matTypography" ngClass="matTypographySm" fxLayoutGap="16px">
+  <h2>
+    A Simple Start
+  </h2>
+  <div>
+    I'm skipping the <a href="https://material.angular.io/components/table/overview#getting-started">"Getting Started"</a>
+    tutorial with a static array,
+    because it's already there, and (as that tutorial mentions), there is virtually no "real world" use for a table
+    built from a static array in the front end.
+    I'm instead going to move on to what amounts to the previous practice of "AJAX-ing in" data, very much
+    like <a href="https://datatables.net/reference/option/ajax">this function</a> from jQuery DataTables, which looks
+    like this on the "old site":
+  </div>
+  <div highlightChildren class="children">
+    <pre><code [textContent]="jsExploding"></code></pre>
+  </div>
+  <div>
+    I've based this update example largely based upon the "Table retrieving data through HTTP" example
+    <a href="https://material.angular.io/components/table/examples">here</a>, with a large number of "tweaks" because I
+    had the ability to use
+    multiple services/classes/interfaces/etc, and my own API.
+  </div>
+  <div>
+    In that example, there are two simple interfaces, one for the collection of items and a count of those items and
+    another for the items
+    themselves. This is a solid practice (and as you might guess it's typically best to do the count on the back end if
+    you have control over the API).
+    The only change I made was to break these up into multiple files:
+  </div>
+  <div highlightChildren class="children">
+    <pre><code [textContent]="code1"></code></pre>
+    <pre><code [textContent]="code2"></code></pre>
+  </div>
+  <div>
+    As compared to jQuery DataTables, this might seem a bit complicated (and there is a little more work so far), but
+    keep in mind we're getting dynamic table
+    content and this is our means of reformatting the JSON into the specific format we need, removing the need to
+    reformat it on the back-end or with
+    custom JavaScript. I had to use this PHP to reformat my previous JSON like
+    <a href="https://github.com/bbutlerfrog/benfrogs-pad/blob/master/main/php/contentServer.php">this</a> for jQuery
+    DataTables. With more control over each
+    step of building the table, we also gain more flexibility. For example, I'm going to integrate some
+    of <a href="https://blog.angular-university.io/angular-material-data-table/">this tutorial</a> (note it's for
+    Angular 6,
+    but we can still use most of it). Specifically, the concept of using an observable for our data instead of
+    MatTableDataSource
+    <a href="https://material.angular.io/components/table/overview#datasource">(here's why)</a>. Here's a service that
+    provides that Observable:
+  </div>
+  <div highlightChildren class="children">
+    <pre><code [textContent]="departmentService"></code></pre>
+  </div>
+  <div>
+    What we are doing here is providing an Observable that calls the HttpClient's http.get() function, expects a return
+    as a "DepartmentApi" object (the array of Department objects and the count of those object), and implements some
+    simple error handling:
+  </div>
+  <div highlightChildren class="children">
+    <pre><code [textContent]="departmentHttp"></code></pre>
+  </div>
+  <div>
+    In the Department Table Component's ngOnInit function (which works much like the oft-used
+    <a href="https://api.jquery.com/ready/">jQuery $(document).ready()</a> function), the constructor
+    requires its own private instance of HttpClient, then passes it along to an instance of
+    the above departmentService, which makes use of it to get our API data (the entire component is
+    <a href="https://github.com/bbutlerfrog/angular-tables/blob/master/src/app/department-table/department-table.component.ts">here</a>):
+  </div>
+  <div highlightChildren class="children">
+    <pre><code [textContent]="departmentTableComponentService"></code></pre>
+  </div>
+  <div>
+    A large amount just happened in a small amount of code, which is a great feature of Angular provided it does not
+    contribute to confusion on the part of
+    the developer. Let's break it down (and it's also a great idea for this or any other data flow to make use of the
+    excellent stack trace tools we have
+    now such as the <a href="https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-firefox-debug">the Visual
+      Studio Code Debugger for Firefox</a> or
+    <a href="https://code.visualstudio.com/blogs/2016/02/23/introducing-chrome-debugger-for-vs-code">Chrome</a> to
+    inspect your variables at every stage of
+    this process). First, we have an (admittedly unnecessary) <a href="https://rxjs-dev.firebaseapp.com/api/index/function/merge">RxJs
+      Merge</a> (we're actually
+    merging the <a href="https://material.angular.io/components/sort/api#MatSort">matSortChange</a> event with nothing,
+    but can add events if necessary), then
+    using the RxJS Observable.pipe function (<a href="https://angular.io/guide/rx-library">as documented here</a>).
+  </div>
+  <div>
+    Step by step, the pipe uses the literally-named
+    <a href="https://rxjs-dev.firebaseapp.com/api/operators/startWith">RxJS StartWith()</a>
+    function to begin with an empty <a href="https://angular.io/guide/observables">observable</a>, then the
+    <a href="https://rxjs-dev.firebaseapp.com/api/operators/switchMap">RxJs switchMap function</a> (there's a deep dive
+    into how
+    switchMap works <a href="https://blog.angular-university.io/rxjs-switchmap-operator/">here</a>) essentially
+    switches around that empty observable
+    with the output of departmentsService.getDepartments() when we start to get data from that service. The map
+    function then removes
+    a cosmetic loading flag, sets the resultsLength variable equal to data.length, and finally returns the array of
+    items (a Department[] object).
+    Because we <a href="https://angular.io/guide/observables#subscribing">subscribe</a> to this
+    observable, whenever the department data updates our table will update. If this sounds familiar, it's likely
+    because it shares that advantage with
+    jQuery AJAX (an observable is actually much more sophisticated and flexible, in that it does not require a direct
+    call to update our table data).
+  </div>
+  <div>
+    The completed sample table's HTML is <a href="https://github.com/bbutlerfrog/angular-tables/blob/master/src/app/department-table/department-table.component.html">
+      here</a>. I've made very few changes from the above examples, and we finally get this (very simple) table:
+    <div fxLayout="row wrap" fxLayoutAlign="space-around center" class="appTable">
+      <app-department-table></app-department-table>
+    </div>
+  <div>
+    At this point, anyone could be forgiven for asking if all of that was "worth it", particularly since we still don't
+    have base elements from jQuery DataTables such as search and pagination.  However, we're going to move on to showcase the power and 
+    flexibility of Angular to implement those features (with newfound flexibility) <a href="/more-interesting">in the next example</a>.
+  </div>
+  <br>
+</div>

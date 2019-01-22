@@ -9,6 +9,7 @@ table {
 .department-table-container {
   position: relative;
   overflow: auto;
+  margin-top: 16px;
 }
 
 table {

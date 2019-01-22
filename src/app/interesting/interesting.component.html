@@ -1,0 +1,122 @@
+<div fxLayout="column" ngClass.gt-sm="matTypography" ngClass="matTypographySm" fxLayoutGap="16px">
+  <h2>
+    Let's Make it More Interesting
+  </h2>
+  <div>
+    We just created a <a href="/simple">very simple</a> table, but how do we make a table in <a href="https://material.angular.io">Angular Material</a>
+    that actually has the features we've come to depend on in <a href="https://datatables.net/">jQuery Datatables</a>?  There is no one 
+    "right" answer, which is actually pretty great (a large part of Angular's power lies in its flexibility).  That being said, let's start by  
+    mimicking the "default" functionality of jQuery DataTables with a simple "search all" at the top of the table and
+    pagination at the bottom
+    (with a more diverse set of data). We're going to mainly use a combination of
+    <a href="https://stackblitz.com/angular/ynlopoomalv?file=app%2Ftable-overview-example.ts">this example</a> this
+    <a href="https://blog.angular-university.io/angular-material-data-table/"> tutorial</a>,
+    however we are going to use our API data (unlike the first
+    example), are going to modify the tutorial example to use a different means to get our data upon search (largely to
+    show we can) and finally
+    are going to use Angular 7 (the tutorial uses Angular 6, and the largest change is mapping our data return and
+    making use of switchMap in the Observable
+    we subscribe to, as in the example above).
+  </div>
+  <div>
+    First, let's add our search element following largely the <a href="https://blog.angular-university.io/angular-material-data-table/">tutorial's
+    example</a>
+    as the example from the <a href="https://material.angular.io/components/table/examples">Angular Material Documentation</a> "works" without issue,
+    but lacks a great deal of flexibility due to the fact that it embeds the keyup() function inside of the HTML:
+  </div>
+  <div highlightChildren class="children">
+    <pre><code [textContent]="employeesMaterialExampleFilter"></code></pre>
+  </div>
+  <div>
+    The approach used in the tutorial is much more flexible and (as mentioned there) allows us to prevent overwhelming
+    our (or another person's) API with a ton of
+    requests on each user keyup/keydown event. It (and this example) first begins with a native input element:
+  </div>
+  <div highlightChildren class="children">
+    <pre><code [textContent]="employeeTableComponentFilter"></code></pre>
+  </div>
+  <div>
+    Then (after starting with blank content in that filter, shown in the complete component
+    <a href="https://github.com/bbutlerfrog/angular-tables/blob/master/src/app/employee-table/employee-table.component.ts">here</a>)
+    we can move
+    along to determining if a user "really wants" to search by including an
+    <a href="https://rxjs-dev.firebaseapp.com/api/operators/debounceTime">RxJS debounceTime</a> (which you can of
+    course adjust depending on user experience and
+    API rate) and <a href="https://rxjs-dev.firebaseapp.com/api/operators/distinctUntilChanged">RxJS
+      distinctUntilChange</a> (which prevents hits on the API
+    when there is no change in the filter criteria):
+  </div>
+  <div highlightChildren class="children">
+    <pre><code [textContent]="employeeTableComponentFilter"></code></pre>
+  </div>
+  <div>
+    Now whenever the content of the "Search" field changes, it will be passed to the
+    <a href="https://github.com/bbutlerfrog/angular-tables/blob/master/src/app/employee.service.ts">employee service's</a>
+    getEmployees function as a parameter, and in turn passed along to the API:
+  </div>
+  <div highlightChildren class="children">
+    <pre><code [textContent]="employeeServiceGetEmployees"></code></pre>
+  </div>
+  <div>
+    You likely noticed that function and service overall are not much different than the
+    <a href="https://github.com/bbutlerfrog/angular-tables/blob/master/src/app/departments.service.ts">Departments
+      Service</a> and its getDepartments
+    function. In fact, we've just added a few parameters. Those of us migrating from
+    <a href="https://datatables.net/manual/server-side">jQuery DataTables Server-Side processing</a> might already spot
+    an advantage: I've used a
+    <a href="https://github.com/bbutlerfrog/benfrogapi/blob/master/app/Http/Controllers/EmployeeController.php">standard
+      and conventional Controller in the
+      API</a> that is really not customized for this table at all. In fact, even if I did not have the ability to
+    customize this API, it would be reasonable
+    to expect to pass in a filter and get results. Server-side jQuery DataTables has rather strict requirements
+    for the server-side script, thus
+    making it difficult to implement if you lack access to an API, or want to reuse an endpoint for another
+    application.
+  </div>
+  <div>
+    There is also a very solid implementation of pagination in <a href="https://blog.angular-university.io/angular-material-data-table/">that
+      tutorial</a>
+    (with a flexible number of rows per page), and it's not tough at all to
+    add it to our table and make it function largely like the familiar DataTables component. It depends on
+    resultsLength, which is easily obtained from
+    the "count" in the "API" interface.
+    First, we'll add a "mat-paginator" element to the bottom of the table:
+  </div>
+  <div highlightChildren class="children">
+    <pre><code [textContent]="employeeTableHTMLPaginator"></code></pre>
+  </div>
+  <div>
+    Then, back in the
+    <a href="https://github.com/bbutlerfrog/angular-tables/blob/master/src/app/employee-table/employee-table.component.ts">employee
+      table component</a>,
+    we'll make use of the <a href="https://rxjs-dev.firebaseapp.com/api/index/function/merge">RxJS Merge</a> function
+    to
+    emit the values of a change in the sort parameter and (now) the pagination element (note that we are also resetting
+    pagination to page zero when sorting
+    changes):
+  </div>
+  <div highlightChildren class="children">
+    <pre><code [textContent]="employeeTablePaginatorChange"></code></pre>
+  </div>
+  <div>
+    Now whenever the user changes the pagination, filter, or (like the first, very simple table) sort parameter, we
+    make another request to the API for the data.
+    This now looks, feels, and functions very much like a jQuery DataTable, as you'll notice:
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <app-employee-table></app-employee-table>
+  </div>
+  <div>
+    If you take a look at the <a href="https://github.com/bbutlerfrog/angular-tables/blob/master/src/app/employee-table/employee-table.component.html">
+      complete HTML of the table component</a>, you'll note that I've added some other small "tweaks", such as
+    disabling sorting on the two date fields (simply because
+    sorting by date is painfully slow on my very small database server). These changes are very easy, and even fairly
+    large visual and functional modifications
+    aren't difficult, as you'll notice from the complete set of <a href="https://material.angular.io/components/table/examples">examples</a>
+    on the Angular Material
+    Documentation page (which is frequently expanded) now that you have a functioning table. Keep an eye on it and this
+    site for more examples of how to versatile
+    Data Tables really can be once you accept the fact DataTables can be two words.
+  </div>
+  <br>
+</div>

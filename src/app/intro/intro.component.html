@@ -1,0 +1,41 @@
+<div fxLayout="column" ngClass.gt-sm="matTypography" ngClass="matTypographySm" fxLayoutGap="16px">
+  <h2>
+    DataTables vs. Data Tables
+  </h2>
+  <div>
+    If you've been developing for a "while" like I have (so you also feel old), there's a decent chance that
+    you've used <a href="https://jquery.com/">jQuery</a> on the front end (or still use it) and thus have made use of
+    <a href="https://datatables.net/">jQuery DataTables</a> (all one word).
+    There's also a decent chance that you're moving to newer JavaScript (well, TypeScript, in this case) frameworks
+    such as <a href="https://angular.io/">Angular</a> for your "greenfield" (new code) projects to create SPA (Single
+    Page Applications),
+    which many would agree is the best approach.
+  </div>
+  <div>
+    So, how would you use Data Tables (two words) in <a href="https://material.angular.io/">Angular Material</a> to
+    create
+    tables that function like <a href="https://benfrog.net/main/exploding.html">these jQuery DataTables</a> on my site?
+    Let's go through
+    how Angular Material Data Tables works, how it compares to jQuery DataTables, and how to create similar elements
+    with the same data.
+  </div>
+  <div>
+    To get some "housekeeping" out of the way, all of the examples on my my "old" (it really is old) site use the
+    <a href="https://github.com/datacharmer/test_db">Employees Sample Database</a>, which as I noted there is used on
+    the jQuery DataTables site as well.
+    To use that data with this example, I retrieve it from an <a href="https://github.com/bbutlerfrog/benfrogapi">API</a>
+    I
+    wrote in <a href="https://lumen.laravel.com/"> Laravel Lumen</a>, but obviously you can use any API and database
+    you want to get data into
+    your Angular project. I'm also going to assume basic knowledge of Angular 7, including
+    <a href="https://angular.io/tutorial/toh-pt6">HttpClient</a>. I would also highly recommend you take a look at the
+    <a href="https://material.angular.io/cdk/table/api">CDK table documentation</a> on the Angular Material site (which
+    I missed/skipped the first
+    time I read the docs due to the fact it's pretty much mentioned as an aside) as I found it pretty vital to get a
+    solid understanding of how
+    exactly Angular Data Tables work and how to customize them.
+  </div>
+  <div>
+    With all that said, let's move on to a <a href="/simple">simple example</a>.
+  </div>
+</div>

@@ -1,5 +1,44 @@
-<app-title-bar></app-title-bar>
-<app-tables></app-tables>
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button aria-label="Toggle sidenav" (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+            <mat-icon aria-label="side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>Angular Data Tables for jQuery DataTables Developers</span>
+        <span class="menu-spacer"></span>
+        <div fxShow="true" fxHide.lt-md>
+            <a mat-button routerLink="/">Home</a>
+            <a mat-button routerLink="/simple">A Simple Start</a>
+            <a mat-button routerLink="/interesting">Getting More Interesting</a>
+        </div>
+        <div class="icons" fxShow="true" fxHide.lt-md="true">
+            <a href="https://github.com/bbutlerfrog/angular-tables" target="_blank" rel="noopener" mat-button>
+                <fa-icon [icon]="['fab', 'github']" class="fab fa-github fa-2x"></fa-icon>
+            </a>
+            <a href="https://www.linkedin.com/in/ben-butler" target="_blank" rel="noopener" mat-button>
+                <fa-icon [icon]="['fab', 'linkedin']" class="fab fa-linkedin fa-2x"></fa-icon>
+            </a>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
 
+<mat-sidenav-container fxFlexFill>
+    <mat-sidenav class="mat-primary"  #sidenav>
+        <mat-nav-list>
+            <a mat-list-item routerLink="/">Home</a>
+            <a mat-list-item routerLink="/simple">A Simple Start</a>
+            <a mat-list-item routerLink="/interesting">Getting More Interesting</a>
+        </mat-nav-list>
+        <div class="responsiveIcons">
+            <a href="https://github.com/bbutlerfrog/angular-tables" target="_blank" rel="noopener" mat-button>
+                <fa-icon [icon]="['fab', 'github']" class="fab fa-github fa-2x"></fa-icon>
+            </a>
+            <a href="https://www.linkedin.com/in/ben-butler" target="_blank" rel="noopener" mat-button>
+                <fa-icon [icon]="['fab', 'linkedin']" class="fab fa-linkedin fa-2x"></fa-icon>
+            </a>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
 
-    
