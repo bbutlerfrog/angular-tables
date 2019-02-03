@@ -1,21 +1,15 @@
-table {
-  width: 100%;
+.employee-container {
+  position: relative;
 }
 
 .employee-table-container {
   position: relative;
-}
-
-.department-table-container {
-  position: relative;
   overflow: auto;
-  margin-top: 16px;
 }
 
 table {
   width: 100%;
 }
-
 
 .mat-form-field {
   font-size: 14px;
