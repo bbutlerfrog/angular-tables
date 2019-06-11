@@ -25,8 +25,8 @@ export class DepartmentTableComponent  implements OnInit{
   departmentsService: DepartmentsService | null;
   data: Department[] = [];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private http: HttpClient) { }
 

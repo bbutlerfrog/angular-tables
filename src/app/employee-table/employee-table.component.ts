@@ -23,9 +23,9 @@ export class EmployeeTableComponent implements OnInit {
   employeeService: EmployeeService | null;
   data: Employee[] = [];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
 
   constructor(private http: HttpClient) { }
