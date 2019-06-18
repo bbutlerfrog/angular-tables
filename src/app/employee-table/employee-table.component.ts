@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { merge, fromEvent } from 'rxjs';
@@ -16,10 +16,10 @@ import { Employee } from '../shared/employee.model';
   styleUrls: ['./employee-table.component.css'],
   providers: [EmployeeService]
 })
-export class EmployeeTableComponent implements OnInit {
+export class EmployeeTableComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['emp_no', 'first_name', 'last_name', 'birth_date', 'hire_date'];
-  resultsLength= 0;
+  resultsLength = 0;
   isLoadingResults = true;
   employeeService: EmployeeService | null;
   data: Employee[] = [];
@@ -30,7 +30,6 @@ export class EmployeeTableComponent implements OnInit {
 
 
   constructor(private http: HttpClient) { }
-  
 
   ngOnInit() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -39,7 +38,6 @@ export class EmployeeTableComponent implements OnInit {
     this.paginator.pageIndex = 0;
     this.paginator.pageSize = 10;
     this.input.nativeElement.value = '';
-    
     this.sort.sortChange.subscribe();
     this.employeeService = new EmployeeService(this.http);
     merge(this.sort.sortChange, this.paginator.page)
@@ -47,12 +45,12 @@ export class EmployeeTableComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.employeeService!.getEmployees(
-              this.sort.direction,
-              this.sort.active,
-              this.input.nativeElement.value,
-              this.paginator.pageIndex,
-              this.paginator.pageSize)
+          return this.employeeService.getEmployees(
+            this.sort.direction,
+            this.sort.active,
+            this.input.nativeElement.value,
+            this.paginator.pageIndex,
+            this.paginator.pageSize);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -72,12 +70,12 @@ export class EmployeeTableComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.employeeService!.getEmployees(
+          return this.employeeService.getEmployees(
             this.sort.direction,
             this.sort.active,
             this.input.nativeElement.value,
             this.paginator.pageIndex,
-            this.paginator.pageSize)
+            this.paginator.pageSize);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
