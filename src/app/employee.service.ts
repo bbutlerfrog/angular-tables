@@ -14,14 +14,13 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
   EmployeesUrl = 'https://api.benfrog.net/employees';
-  
     getEmployees(sortDirection: string, sortParameter: string, filter: string, start: number, end: number): Observable<EmployeeApi> {
         sortDirection = sortDirection.trim();
         sortParameter = sortParameter.trim();
         filter = filter.trim();
 
-        //toString is necessary here because httpClient does not support anything but strings 
-        let httpParams = new HttpParams({
+        // toString is necessary here because httpClient does not support anything but strings
+        const httpParams = new HttpParams({
           fromObject: {
               sortDirection: sortDirection, sortParameter: sortParameter, filter: filter,
               start: start.toString(), end: end.toString()
@@ -33,7 +32,7 @@ export class EmployeeService {
           retry(3), // retry a failed request up to 3 times
           catchError(this.handleError), // then handle the error
       );
-    }  
+    }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -49,7 +48,7 @@ export class EmployeeService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
 
 }
 

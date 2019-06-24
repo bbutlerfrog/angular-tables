@@ -23,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { IntroComponent } from './intro/intro.component';
 import { SimpleComponent } from './simple/simple.component';
 import { InterestingComponent } from './interesting/interesting.component';
+import { ExpandEmployeeTableComponent } from './expand-employee-table/expand-employee-table.component';
 
 export const APP_ID = 'angulartables';
 
@@ -33,7 +34,8 @@ export const APP_ID = 'angulartables';
     EmployeeTableComponent,
     IntroComponent,
     SimpleComponent,
-    InterestingComponent
+    InterestingComponent,
+    ExpandEmployeeTableComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'angulartables'}),

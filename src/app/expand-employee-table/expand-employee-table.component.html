@@ -1,0 +1,59 @@
+<div class="employee-container mat-elevation-z8">
+  <div class="employee-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <mat-form-field>
+    <input matInput placeholder="Search" #input>
+  </mat-form-field>
+
+  <div class="employee-table-container">
+    <table mat-table multiTemplateDataRows [dataSource]="data" matSort matSortActive="emp_no" matSortDirection="asc" matSortDisableClear>
+      
+      <ng-container matColumnDef="emp_no">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+        <td mat-cell *matCellDef="let row">{{row.emp_no}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="first_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
+        <td mat-cell *matCellDef="let row">{{row.first_name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="last_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
+        <td mat-cell *matCellDef="let row">{{row.last_name}}</td>
+
+      </ng-container>
+
+      <ng-container matColumnDef="birth_date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disabled>Birth Date</th>
+        <td mat-cell *matCellDef="let row">{{row.birth_date}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="hire_date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disabled>Hire Date</th>
+        <td mat-cell *matCellDef="let row">{{row.hire_date}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <ng-container matColumnDef="expandedEmployee">
+        <td mat-cell *matCellDef="let employee" [attr.colspan]="displayedColumns.length">
+          <div class="employee-detail" [@detailExpand]="employee == expandedEmployee ? 'expanded' : 'collapsed'">
+            <div class="first_name">{{employee.first_name}}</div>
+            <div class="last_name">{{employee.last_name}}</div>
+            <div class="birth_date">{{employee.birth_date}}</div>
+            <div class="birth_date">{{employee.hire_date}}</div>
+          </div>  
+        </td>
+      </ng-container>
+
+      
+      <tr mat-row *matRowDef="let employee; columns: displayedColumns;" class="employee-row"
+        [class.employee-detail-row]="expandedEmployee === employee"
+        (click)="expandedEmployee = expandedEmployee === employee ? null : employee">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedEmployee']" class="employee-detail-row"></tr>
+    </table>
+  </div>
+
+  <mat-paginator [length]="resultsLength" [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
+</div>
